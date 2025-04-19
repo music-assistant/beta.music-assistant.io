@@ -76,7 +76,6 @@ nav:
       - help/index.md
       - Translations: help/lokalise.md
   - Release Cycle: release.md
-  - Test: player-support/#player-controls
 
 theme:
   custom_dir: overrides

@@ -1,0 +1,40 @@
+
+# Radio Paradise Provider ![Preview image](../assets/icons/radioparadise-icon.png){ width=70 align=right }
+
+Music Assistant has support for [Radio Paradise](https://radioparadise.com/) which allows easy addition of their radio stations to Music Assistant.
+
+## Features
+
+|           |                     |
+|:-----------------------|:---------------------:|
+| Subscription FREE | Yes |
+| Self-Hosted Local Media | No |
+| Media Types Supported | Radio |
+| [Recommendations](../ui.md#view-home) Supported | No |
+| Lyrics Supported | No |
+| [Radio Mode](../ui.md#track-menu) | No |
+| Maximum Stream Quality | Lossless FLAC (32 bit, 44.1 kHz) |
+| Login Method | None |
+
+## Configuration
+
+- In the configuration, ............... 
+
+## Usage
+
+The Radio Paradise provider doesn't add stations to the 'radio' tab by default.
+
+1. In the left hand menu you need to select 'browse'
+2. Then click 'Radio Paradise'
+
+    ![Preview image](../assets/screenshots/IMG_1181.jpeg){ width=400 }
+
+3. Then navigate to the radio station you want to listen to
+4. Click play now or add to library 
+
+After adding to the library, the station will become available in the Radio view
+
+## Known Issues / Notes
+
+- Some other applications support skipping tracks. This is not supported in Music Assistant
+- Dynamically changing the album covers in the Now Playing view or Player Bar is not supported

@@ -13,21 +13,29 @@ Music Assistant has support for [Radio Paradise](https://radioparadise.com/) whi
 | [Recommendations](../ui.md#view-home) Supported | No |
 | Lyrics Supported | No |
 | [Radio Mode](../ui.md#track-menu) | No |
-| Maximum Stream Quality | Lossless FLAC (32 bit, 44.1 kHz) |
+| Maximum Stream Quality | Lossless FLAC (16 bit, 44.1 kHz) |
 | Login Method | None |
+
+### Other
+
+- When available, details of upcoming tracks will be shown
 
 ## Configuration
 
-- In the configuration, ............... 
+- In the configuration, you only need to click the save button
+
+### Settings
+
+- <b>Stream Quality.</b> Select the desired stream quality
 
 ## Usage
 
-The Radio Paradise provider doesn't add stations to the 'radio' tab by default.
+The Radio Paradise provider doesn't add stations to the 'Radio' tab by default.
 
-1. In the left hand menu you need to select 'browse'
+1. In the menu you need to select 'Browse'
 2. Then click 'Radio Paradise'
 
-    ![Preview image](../assets/screenshots/IMG_1181.jpeg){ width=400 }
+    ![Preview image](../assets/screenshots/radioparadise.png){ width=400 }
 
 3. Then navigate to the radio station you want to listen to
 4. Click play now or add to library 
@@ -37,4 +45,3 @@ After adding to the library, the station will become available in the Radio view
 ## Known Issues / Notes
 
 - Some other applications support skipping tracks. This is not supported in Music Assistant
-- Dynamically changing the album covers in the Now Playing view or Player Bar is not supported

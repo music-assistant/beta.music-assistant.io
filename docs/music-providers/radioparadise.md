@@ -35,7 +35,7 @@ The Radio Paradise provider doesn't add stations to the 'Radio' tab by default.
 1. In the menu you need to select 'Browse'
 2. Then click 'Radio Paradise'
 
-    ![Preview image](../assets/screenshots/radioparadise.png){ width=400 }
+    ![Preview image](../assets/screenshots/radioparadise-browse.png){ width=400 }
 
 3. Then navigate to the radio station you want to listen to
 4. Click play now or add to library 

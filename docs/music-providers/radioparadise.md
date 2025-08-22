@@ -24,10 +24,6 @@ Music Assistant has support for [Radio Paradise](https://radioparadise.com/) whi
 
 - In the configuration, you only need to click the save button
 
-### Settings
-
-- <b>Stream Quality.</b> Select the desired stream quality
-
 ## Usage
 
 The Radio Paradise provider doesn't add stations to the 'Radio' tab by default.

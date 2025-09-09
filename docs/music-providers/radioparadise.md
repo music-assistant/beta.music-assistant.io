@@ -3,7 +3,7 @@
 
 Music Assistant has support for [Radio Paradise](https://radioparadise.com/) which allows easy addition of their radio stations to Music Assistant.
 
-!!! tip
+!!! tip "Donate"
     Radio Paradise exists due to the generosity of their donors. If you are using this provider consider supporting them https://radioparadise.com/support
 
 ## Features

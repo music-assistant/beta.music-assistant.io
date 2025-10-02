@@ -1,4 +1,4 @@
-# JioSaavn Provider ![Preview image](../assets/icons/jiosaavn-icon.png){ width=70 align=right }
+# JioSaavn Provider ![Preview image](../assets/icons/jiosaavn-logo.svg){ width=70 align=right }
 
 Music Assistant has support for [JioSaavn](https://radioparadise.com/) which allows access to the latest and trending Bollywood Hindi songs.
 

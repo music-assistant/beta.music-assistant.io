@@ -50,6 +50,7 @@ nav:
       - Internet Archive: music-providers/internet-archive.md
       - iTunes Podcast Search: music-providers/itunes-podcast.md
       - Jellyfin: music-providers/jellyfin.md
+      - JioSaavn: music-providers/jiosaavn.md
       - Local Files: music-providers/filesystem.md
       - Nugs.net: music-providers/nugs.md
       - Phish.in: music-providers/phishin.md

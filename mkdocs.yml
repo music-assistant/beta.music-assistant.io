@@ -86,6 +86,7 @@ nav:
     - Listenbrainz Scrobbler: plugins/listenbrainz_scrobble.md
     - Subsonic Scrobbler: plugins/subsonic_scrobble.md
     - plugins/spotify-connect.md
+    - VBAN Receiver: plugins/vban-receiver.md
   - Desktop Companion App: companion-app.md
   - Mobile Devices: mobile/index.md
   - API: api.md

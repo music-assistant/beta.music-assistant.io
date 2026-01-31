@@ -29,7 +29,7 @@ The **AriaCast Receiver** plugin allows you to stream high-quality audio wireles
 
 | Setting | Default | Description |
 |:---|:---|:---|
-| **Server Name** | AriaCast Speaker | Name shown in client discovery |
+| **Server Name** | Music Assistant | Name shown in client discovery |
 | **Connected Player** | Auto | Target Music Assistant player |
 | **Streaming Port** | 12889 | WebSocket/HTTP port for all endpoints |
 | **Discovery Port** | 12888 | UDP discovery port |

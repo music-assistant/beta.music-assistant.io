@@ -14,9 +14,9 @@ This provider is built on top of the [yandex-music-api](https://github.com/Marsh
 | Subscription FREE | Yes (with limitations) |
 | Self-Hosted Local Media | No |
 | Media Types Supported | Artists, Albums, Tracks, Playlists |
-| [Recommendations](../ui.md#view-home) Supported | No |
+| [Recommendations](../ui.md#view-home) Supported | Yes |
 | Lyrics Supported | No |
-| [Radio Mode](../ui.md#track-menu) | No |
+| [Radio Mode](../ui.md#track-menu) | Yes |
 | Maximum Stream Quality | Lossless FLAC (with Plus subscription) |
 | Login Method | Token |
 
@@ -26,6 +26,23 @@ This provider is built on top of the [yandex-music-api](https://github.com/Marsh
 - Items in a users Yandex Music library will be synced to Music Assistant
 - Adding/removing items to/from the Music Assistant library will sync back to Yandex Music
 - Browse is available to explore the Yandex Music catalogue
+- **My Wave (Моя волна)** — personalized track feed, recommendations in Discover, and radio mode (similar tracks via Rotor)
+
+## My Wave (Моя волна)
+
+My Wave is Yandex Music’s personalized track feed, powered by the Rotor API. It appears in several places in Music Assistant.
+
+### Sync and where it appears
+
+- **Browse:** A root folder “Моя волна” / “My Wave” (name depends on locale: Russian for `ru_*`, English otherwise). Opening it loads up to three batches of tracks so that starting playback adds more to the queue. A “Load more” / “Ещё” folder loads the next batch (pagination by first track in the chain in the API).
+- **Recommendations (Discover):** A single “Моя волна” section with the first batch of tracks.
+- **Library playlists:** A virtual playlist “Моя волна” is shown first in the playlists list; tracks are loaded in pages via `get_playlist_tracks` with pagination.
+
+### What you can do
+
+- Play from Browse (folder), from Discover, or from the “Моя волна” playlist in your library.
+- **Radio mode:** When you start radio from a Yandex Music track, similar tracks are added to the queue using the Rotor station `track:{id}`.
+- **Rotor feedback:** While playing My Wave, the provider sends `radioStarted`, `trackStarted`, `trackFinished` / skip events to the API to improve recommendations. On connection errors (e.g. “Server disconnected”), it reconnects and retries the request.
 
 ## Configuration
 
@@ -46,6 +63,7 @@ Configuration requires obtaining an OAuth token from Yandex Music.
 ## Known Issues / Notes
 
 - The token may expire and need to be refreshed periodically
+- During long My Wave sessions the API may occasionally disconnect; the provider will reconnect and retry automatically
 
 ## Not yet supported
 - Multiple Yandex Music accounts cannot be added as yet

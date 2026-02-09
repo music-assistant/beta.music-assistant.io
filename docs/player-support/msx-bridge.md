@@ -54,5 +54,6 @@ All traffic stays on your local network; no cloud services are required.
 
 ## Links
 
+- [MSX Music Assistant Bridge](https://github.com/trudenboy/msx-music-assistant) — provider source code and documentation (by [trudenboy](https://github.com/trudenboy))
 - [Media Station X](https://msx.benzac.de/) — MSX app and documentation
 - [Music Assistant Server](https://github.com/music-assistant/server) — upstream server repository (MSX Bridge provider is included when the PR is merged)

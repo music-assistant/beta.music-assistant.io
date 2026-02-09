@@ -13,6 +13,8 @@ The **MSX Bridge** player provider streams your Music Assistant library to Smart
 - **WebSocket push**: Play and stop events from Music Assistant are pushed to connected TVs in real time
 - **Library REST API**: External clients can use `/api/albums`, `/api/artists`, `/api/playlists`, `/api/tracks`, `/api/search`, `/api/recently-played`
 - **Playback control**: Play, pause, stop, next, previous via API or MA UI
+- **Instant stop and pause**: Stop and Pause close the MSX player immediately; Play resumes and re-sends the current track
+- **Quick stop**: Dashboard button and `POST /api/quick-stop/{player_id}` for immediate stop on TV
 
 ## Configuration
 
@@ -24,6 +26,7 @@ Add the MSX Bridge provider under **Settings → Player Provider Settings**. The
 | **Output format** | Audio format sent to the TV: MP3, AAC, or FLAC. | MP3 |
 | **Player idle timeout** | Minutes of inactivity after which a TV player is automatically unregistered. | 30 |
 | **Show stop notification** | When stopping playback, show a notification on the TV (if supported by the MSX client). | Off |
+| **Abort stream first** | When stopping, abort the stream before sending stop to MSX (may help on some TVs). | Off |
 
 Standard [player settings](../settings/player-provider.md) apply to MSX players once they appear.
 
@@ -35,7 +38,7 @@ Standard [player settings](../settings/player-provider.md) apply to MSX players 
    Replace `<YOUR_SERVER_IP>` with the IP address of the machine running Music Assistant (or use hostname if your TV can resolve it).
 4. Restart MSX. The Music Assistant menu (Albums, Artists, Playlists, Tracks, Search) should appear.
 
-You can also open `http://<YOUR_SERVER_IP>:8099/` in a browser for a simple status page with the setup URL and list of registered players.
+You can also open `http://<YOUR_SERVER_IP>:8099/` in a browser for a status dashboard with the setup URL, list of registered players, and a **Quick stop** button per player for immediate stop on the TV.
 
 ## How It Works
 
@@ -48,7 +51,6 @@ All traffic stays on your local network; no cloud services are required.
 
 ## Known Issues / Limitations
 
-- **Stop delay**: Pressing Stop in Music Assistant may take some time (e.g. up to ~30 seconds) before playback actually stops on the TV. Disabling (power off) the player stops immediately. This is under investigation (MA stream buffer / MSX client behavior).
 - **Local network**: The TV and the Music Assistant server must be on the same network (or reachable) for the HTTP and WebSocket connections to work.
 - **Single server**: One MSX Bridge instance per Music Assistant server; multiple TVs connect to the same server and each gets its own player.
 

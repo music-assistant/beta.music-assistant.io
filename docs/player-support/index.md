@@ -33,4 +33,4 @@ A player provider may optionally expose additional player specific settings (e.g
 These options are only available in Home Assistant if the Music Assistant integration is configured.
 A player may then have additional number, switch, text or select entities.
 Additionally, one may use the Music Assistant API to control these options.
-Access via MA's native UI is not yet possible.
+Access to these options via MA's native UI is not possible.

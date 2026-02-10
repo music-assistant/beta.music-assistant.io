@@ -27,7 +27,7 @@ In addition to the [Individual Player Settings](../settings/individual-player.md
 ## Player Options
 
 MusicCast has support for [player options](./index.md/#player-options) and may expose switch, number, select, text and sensor entities to Home Assistant if the Music Assistant integration is configured.
-The amount of exposed entities depends on the individual player, and what is supported by the underlying aiomusiccast library.
+What entities are exposed depends on the individual player, and what is supported by the underlying aiomusiccast library.
 
 ## Known Issues / Notes
 

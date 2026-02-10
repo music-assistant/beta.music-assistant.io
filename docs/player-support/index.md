@@ -29,7 +29,7 @@ A sample rate above 48kHz or a bit depth above 16 is considered High Resolution 
 
 ## Player Options
 
-A player provider may optionally expose additional player specific settings, e.g. the ability to adjust the player's native bass or treble value.
+A player provider may optionally expose additional player specific settings (e.g. the ability to adjust the player's native bass or treble value) which will appear in Home Assistant as entities.
 At this point, these options are only available in Home Assistant if the Music Assistant integration is configured.
 A player may then have additional number, switch, text or select entities.
 Alternatively one may use the Music Assistant API to control these options.

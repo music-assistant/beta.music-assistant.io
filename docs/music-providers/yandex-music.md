@@ -15,7 +15,7 @@ This provider is built on top of the [yandex-music-api](https://github.com/Marsh
 | Self-Hosted Local Media | No |
 | Media Types Supported | Artists, Albums, Tracks, Playlists |
 | [Recommendations](../ui.md#view-home) Supported | Yes |
-| Lyrics Supported | No |
+| Lyrics Supported | Yes |
 | [Radio Mode](../ui.md#track-menu) | Yes |
 | Maximum Stream Quality | Lossless FLAC (with Plus subscription) |
 | Login Method | Token |
@@ -29,6 +29,7 @@ This provider is built on top of the [yandex-music-api](https://github.com/Marsh
 - **My Wave (Моя волна)** — personalized track feed, recommendations in Discover, and radio mode
 - **Picks & Mixes** — curated playlists by mood, activity, era, genre, and season
 - **Extended recommendations** — Made for You, Chart, New Releases, New Playlists on home page
+- **Lyrics** — synced (LRC) and plain text lyrics from Yandex Music
 
 ## Audio Quality
 
@@ -118,6 +119,17 @@ Additional sections on the home page:
 
 Each section can be enabled or disabled independently in settings.
 
+## Lyrics
+
+Lyrics are fetched directly from Yandex Music when viewing track details.
+
+- **Synced lyrics (LRC)** — With timestamps for karaoke-style synchronized display
+- **Plain text lyrics** — When synced lyrics are not available
+- **Automatic caching** — Lyrics are cached for 30 days
+
+!!! note
+    Lyrics availability depends on the track and may vary by region due to licensing restrictions.
+
 ## Configuration
 
 Configuration requires obtaining an OAuth token from Yandex Music.
@@ -159,4 +171,3 @@ All folder names and labels are available in Russian and English. The language i
 ## Not yet supported
 
 - Multiple Yandex Music accounts cannot be added as yet
-- Lyrics are not currently supported

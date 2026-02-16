@@ -1,93 +1,105 @@
 # MSX Bridge
 
-The **MSX Bridge** player provider streams your Music Assistant library to Smart TVs through the [Media Station X (MSX)](https://msx.benzac.de/) app and to any device with a web browser via the built-in kiosk web player. It runs inside the Music Assistant server — no separate containers, add-ons, or cloud services are required.
+The **MSX Bridge** player provider lets you play music from Music Assistant on your Smart TV or any device with a web browser. It works through the free [Media Station X (MSX)](https://msx.benzac.de/) app — a universal media app available on most Smart TV platforms. The provider runs inside the Music Assistant server and requires no separate containers, add-ons, or cloud services.
 
-!!! tip "Two ways to use it"
-    **On a Smart TV**: Install the free MSX app and point it at your Music Assistant server.
-    **In a browser**: Open `http://<SERVER_IP>:8099/web` on a tablet, laptop, or Raspberry Pi — no app install needed.
+!!! tip "Two ways to listen"
+    📺 **On a Smart TV** — install the free MSX app and point it at your Music Assistant server.
+    🌐 **In a browser** — open `http://<YOUR_SERVER_IP>:8099/web` on a tablet, laptop, phone, or Raspberry Pi.
 
 ## Features
 
-### Library Browsing
+### Browse Your Library on TV
 
-- Browse **Albums**, **Artists**, **Playlists**, and **Tracks** with TV remote-friendly navigation
-- **Recently Played** section for quick access to recent music
-- **Detail pages**: Drill into album tracks, artist albums, and playlist tracks
-- **Search**: Full-text search across the entire library (MSX keyboard on TV, standard input in web player)
+Use your TV remote to explore your full Music Assistant library:
 
-### Audio Playback
+- **Albums** — browse all albums, open any album to see its tracks
+- **Artists** — browse artists, open an artist to see their albums
+- **Playlists** — browse playlists, open any playlist to see its tracks
+- **Tracks** — browse all tracks in your library
+- **Recently Played** — quick access to tracks you listened to recently
+- **Search** — search across your entire library using the on-screen MSX keyboard
 
-- Stream audio via Music Assistant's queue system with real-time PCM → ffmpeg encoding (MP3, AAC, or FLAC)
-- **Playlist mode**: Select any track in a list to start playback from that point — subsequent tracks play automatically
-- **Playback controls**: Play, pause, stop, next, previous — from the TV remote, the web player, or the Music Assistant UI
-- **Bidirectional sync**: Control playback from any source — actions taken on the TV reflect in MA and vice versa
-- **Progress tracking**: Current position is reported back to Music Assistant in real time
+All content is presented as native MSX pages with artwork, optimized for TV remote navigation (arrow keys, OK, back).
 
-### Multi-Device
+### Play Music
 
-- **Dynamic player registration**: Each TV or browser registers as a Music Assistant player on demand (by device ID or IP)
-- **Multi-TV support**: Connect multiple TVs and browsers simultaneously — each gets its own independent player
-- **Automatic cleanup**: Idle players are automatically unregistered after a configurable timeout (default: 30 minutes)
-- **Distinct naming**: MSX app players appear as "MSX TV", web players appear as "WEB TV" in Music Assistant
+Select any track in a list to start playing from that point — the rest of the tracks in the list play automatically after it, just like a regular playlist.
 
-### Web Kiosk Player
+- Supports **MP3**, **AAC**, and **FLAC** output formats (configurable)
+- **Play / Pause / Stop / Next / Previous** — from the TV remote, the web player, or the Music Assistant interface
+- **Progress bar** — the TV shows the current position and total duration of each track
+- Music continues playing as you browse other pages — playback runs independently
 
-- **Browser-based player** at `/web` — works on any device with a modern browser
-- Sidebar navigation matching the MSX TV layout (Albums, Artists, Playlists, Tracks, Search)
-- Built-in HTML5 audio player with controls, progress bar, and full-screen player mode
-- Ideal for wall-mounted tablets, old laptops, Raspberry Pi with Chromium, or digital signage
+### Control from Anywhere
 
-### REST API
+Playback is fully synchronized between the TV and Music Assistant:
 
-External clients and home automation systems can integrate with the provider's HTTP API:
+- **Pause on the TV** → Music Assistant UI shows paused
+- **Skip a track in Music Assistant** → the TV jumps to the next track
+- **Stop from Music Assistant** → the TV stops immediately
 
-| Endpoint | Description |
-|----------|-------------|
-| `GET /api/albums` | List albums (supports `limit` and `offset`) |
-| `GET /api/artists` | List artists |
-| `GET /api/playlists` | List playlists |
-| `GET /api/tracks` | List tracks |
-| `GET /api/albums/{id}/tracks` | Tracks for an album |
-| `GET /api/artists/{id}/albums` | Albums for an artist |
-| `GET /api/playlists/{id}/tracks` | Tracks for a playlist |
-| `GET /api/search?q=...` | Search the library |
-| `GET /api/recently-played` | Recently played tracks |
-| `POST /api/play` | Start playback (JSON body: `track_uri`, `player_id`) |
-| `POST /api/pause/{player_id}` | Pause playback |
-| `POST /api/stop/{player_id}` | Stop playback |
-| `POST /api/next/{player_id}` | Skip to next track |
-| `POST /api/previous/{player_id}` | Skip to previous track |
-| `GET /health` | Health check |
+This works in both directions and in real time. You never need to worry about which device you're controlling from — they all stay in sync.
 
-## Configuration
+### Multiple TVs and Browsers
 
-Add the MSX Bridge provider under **Settings → Player Provider Settings**. The following options are available:
+Each TV or browser tab registers as a separate player in Music Assistant:
 
-| Option | Description | Default |
-|--------|-------------|---------|
-| **HTTP port** | Port for the HTTP server (MSX bootstrap, content pages, audio streams, web player). | 8099 |
-| **Output format** | Audio format sent to clients: MP3, AAC, or FLAC. | MP3 |
-| **Player idle timeout** | Minutes of inactivity after which a player is automatically unregistered. | 30 |
-| **Show stop notification** | Show a notification on the TV when stopping playback (if supported by the MSX client). | Off |
-| **Abort stream first** | Abort the audio stream before sending stop to MSX. May help on some TVs where playback doesn't stop cleanly. | Off |
+- Connect as many TVs and browsers as you want — they all work independently
+- Players appear automatically when a device connects (no manual setup needed)
+- In Music Assistant, TV players appear as **"MSX TV (device_id)"**
+- Players that have been idle for more than 30 minutes (configurable) are automatically cleaned up
 
-Standard [player settings](../settings/player-provider.md) apply to MSX Bridge players once they appear.
+### Web Player
+
+A built-in browser-based player is available at `/web` — no MSX app needed:
+
+- Works on tablets, laptops, phones, Raspberry Pi, or any device with a modern browser
+- Sidebar navigation: Albums, Artists, Playlists, Tracks, Search — same content as the TV
+- HTML5 audio player with controls, progress bar, and seek
+- Each browser tab registers as an independent player in Music Assistant
+
+!!! example "Use case: kitchen tablet"
+    Mount a tablet on the wall, open `http://192.168.1.100:8099/web` in Chrome, and you have a dedicated music player controlled from anywhere in your home.
+
+### Player Grouping (Experimental)
+
+You can group multiple MSX TVs to play the same music simultaneously:
+
+- Enable or disable via the **"Enable player grouping"** setting
+- Two stream modes:
+    - **Independent** (default) — each TV gets its own audio stream
+    - **Shared Buffer** — one audio stream shared across all grouped TVs (uses less CPU)
+
+!!! warning "Experimental"
+    Player grouping is experimental. If you experience issues with a multi-TV setup, try disabling it in the provider settings.
 
 ## Setup
 
-### Option 1: Smart TV (MSX App)
+### Smart TV (MSX App)
 
-1. Install the [Media Station X](https://msx.benzac.de/) app on your Smart TV.
-   Supported platforms: Samsung Tizen, LG webOS, Android TV, Fire TV, Apple TV, Xbox, or any web browser.
-2. Open the MSX app and go to **Settings → Start Parameter**.
+1. Install the **Media Station X** app on your Smart TV:
+    - [Samsung Tizen (Smart Hub)](https://msx.benzac.de/info/more.html?tab=Samsung)
+    - [LG webOS (LG Content Store)](https://msx.benzac.de/info/more.html?tab=LG)
+    - [Android TV / Google TV (Google Play)](https://msx.benzac.de/info/more.html?tab=Android)
+    - [Amazon Fire TV (Amazon Appstore)](https://msx.benzac.de/info/more.html?tab=Amazon)
+    - [Apple TV (App Store)](https://msx.benzac.de/info/more.html?tab=Apple)
+    - [Xbox (Microsoft Store)](https://msx.benzac.de/info/more.html?tab=Xbox)
+    - Or open [msx.benzac.de](https://msx.benzac.de/info/more.html?tab=Browser) in any web browser
+
+2. Open the MSX app and go to **Settings → Start Parameter**
+
 3. Enter the start URL:
-   ```
-   http://<YOUR_SERVER_IP>:8099/msx/start.json
-   ```
-   Replace `<YOUR_SERVER_IP>` with the IP address or hostname of your Music Assistant server.
-4. Restart MSX. The Music Assistant menu should appear with: Recently Played, Albums, Artists, Playlists, Tracks, and Search.
+    ```
+    http://<YOUR_SERVER_IP>:8099/msx/start.json
+    ```
+    Replace `<YOUR_SERVER_IP>` with the IP address of your Music Assistant server.
 
-### Option 2: Web Browser (Kiosk Player)
+4. Restart the MSX app. You should see the Music Assistant menu: Recently Played, Albums, Artists, Playlists, Tracks, and Search.
+
+!!! tip "Finding the right URL"
+    Open `http://<YOUR_SERVER_IP>:8099/` in any browser — the status dashboard shows the exact URL to copy into MSX.
+
+### Web Browser
 
 Open the following URL in any modern browser:
 
@@ -95,52 +107,106 @@ Open the following URL in any modern browser:
 http://<YOUR_SERVER_IP>:8099/web
 ```
 
-No installation required. The web player works on tablets, laptops, phones, Raspberry Pi, or any device with a browser. Each browser tab registers as an independent "WEB TV" player in Music Assistant.
+No installation needed. Each browser tab becomes a separate player in Music Assistant.
 
-!!! tip "Kiosk mode"
-    For a wall-mounted tablet or digital signage, use your browser's fullscreen or kiosk mode (e.g. `chromium --kiosk http://192.168.1.100:8099/web`) for a distraction-free experience.
+!!! tip "Kiosk mode for digital signage"
+    For a wall-mounted tablet or digital signage, launch the browser in fullscreen or kiosk mode:
+    ```
+    chromium --kiosk http://192.168.1.100:8099/web
+    ```
 
 ### Status Dashboard
 
 Open `http://<YOUR_SERVER_IP>:8099/` in a browser to see:
 
-- The MSX setup URL (for copy-pasting into the TV)
+- The MSX setup URL (ready to copy into the TV)
 - A link to the web player
-- A list of all registered players with their current state
-- A **Quick stop** button per player for immediate stop
+- All registered players with their current playback state
+- A **Quick stop** button for each player
+
+## Settings
+
+Add the MSX Bridge provider under **Settings → Player Providers**.
+
+| Setting | Description | Default |
+|---------|-------------|---------|
+| **HTTP Server Port** | The port the HTTP server listens on. MSX, the web player, and the REST API all use this port. Change if 8099 is occupied. | `8099` |
+| **Audio Output Format** | Format for audio streaming. **MP3** works on all devices. Use **AAC** for better quality at the same bitrate, or **FLAC** for lossless audio (requires a fast network and a TV that supports FLAC). | `MP3` |
+| **Player Idle Timeout** | Minutes of inactivity (no playback, no browsing) before a player is automatically removed. The player reappears instantly when the TV or browser reconnects. | `30` |
+| **Show notification before closing player** | When stopping playback from Music Assistant, show a brief notification on the TV screen before closing the player. | Off |
+| **Abort stream before broadcast stop** | When stopping playback, cut the audio stream before sending the stop command to the TV (instead of after). Try enabling this if the TV doesn't stop cleanly. | Off |
+| **Enable player grouping** | Allow grouping multiple MSX TVs to play the same music simultaneously. Disable if you experience issues. | On |
+| **Group Stream Mode** | How audio is delivered to grouped players. **Independent**: each TV gets its own stream (more reliable). **Shared Buffer**: one stream shared across all TVs in the group (less CPU, better sync). | Independent |
+
+Standard [player settings](../settings/player-provider.md) apply to MSX Bridge players once they appear.
 
 ## How It Works
 
-### MSX TV Flow
+### On a Smart TV
 
-1. **Bootstrap**: The TV loads `/msx/start.json` → an interaction plugin detects the device ID and opens a WebSocket connection for push notifications.
-2. **Menu**: The plugin requests the main menu, which lists library sections (Albums, Artists, Playlists, Tracks, Search).
-3. **Navigation**: Selecting a menu item loads a content page (e.g. `/msx/albums.json`). Album items drill into track lists; track items start playlist playback.
-4. **Playback**: When a track is selected, MSX fetches the audio endpoint. The provider enqueues the track via Music Assistant's queue and streams PCM → ffmpeg → encoded audio (MP3/AAC/FLAC) to the TV.
-5. **Push notifications**: When playback is controlled from Music Assistant (play, pause, stop, next, previous), the WebSocket pushes the event to the TV so the MSX player updates immediately.
+1. The MSX app loads the start URL and receives a menu with your library sections
+2. You browse content using the TV remote — each page loads instantly from the Music Assistant server
+3. When you select a track, the provider creates a playlist from the current list and sends it to the TV
+4. The TV fetches audio from the provider, which streams it in real time (Music Assistant → audio encoding → TV)
+5. A WebSocket connection keeps the TV and Music Assistant in sync — play, pause, stop, next, previous all work from both sides
 
-### Web Player Flow
+### In a Web Browser
 
-1. **Page load**: The browser opens `/web`, generates a unique device ID (stored in `localStorage`), and connects to the WebSocket.
-2. **Sidebar menu**: Fetched from `/msx/menu.json` — the same endpoint the MSX app uses.
-3. **Content**: Clicking a menu item fetches the corresponding MSX JSON content page and renders it as HTML (grid cards for albums/artists, list rows for tracks).
-4. **Playback**: Clicking a track loads the MSX playlist JSON and plays audio via the HTML5 `<audio>` element. Next/previous, progress, and seek all work natively.
-5. **Sync**: The web player sends position updates and pause/resume events via WebSocket, and receives push notifications from Music Assistant — fully bidirectional, just like the MSX app.
+1. The browser opens the web player page and generates a unique device ID
+2. You browse the same library content as the TV — albums, artists, playlists, tracks, search
+3. Clicking a track starts playback through the browser's built-in audio player
+4. Position, pause, and resume are synchronized with Music Assistant via WebSocket — same as the TV
 
 ### Network
 
-All traffic stays on your local network. The TV/browser communicates with the Music Assistant server over HTTP and WebSocket on the configured port (default: 8099). No cloud services, no external dependencies.
+All traffic stays on your local network. The TV or browser communicates with the Music Assistant server over HTTP and WebSocket on the configured port (default: 8099). No cloud services, no external accounts, no internet connection required (beyond what your music sources need).
 
-## Known Issues / Limitations
+## REST API
 
-- **Local network**: The TV/browser and the Music Assistant server must be on the same network (or otherwise reachable) for HTTP and WebSocket connections.
-- **Single instance**: One MSX Bridge provider per Music Assistant server. Multiple TVs and browsers connect to the same instance.
-- **MSX app required on TV**: The TV interface requires the free MSX app. The web player (`/web`) is the alternative for devices without MSX.
-- **Audio format**: Some older Smart TVs may not support AAC or FLAC. MP3 (default) has the widest compatibility.
-- **Browser autoplay**: Some browsers block audio autoplay until the user interacts with the page. Click the play button if audio doesn't start automatically.
+The provider exposes a REST API on the same port that external clients or home automation systems can use:
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/albums` | List albums (supports `limit` and `offset` parameters) |
+| GET | `/api/artists` | List artists |
+| GET | `/api/playlists` | List playlists |
+| GET | `/api/tracks` | List tracks |
+| GET | `/api/albums/{id}/tracks` | Tracks for an album |
+| GET | `/api/artists/{id}/albums` | Albums for an artist |
+| GET | `/api/playlists/{id}/tracks` | Tracks for a playlist |
+| GET | `/api/search?q=...` | Search the library |
+| GET | `/api/recently-played` | Recently played tracks |
+| POST | `/api/play` | Start playback (JSON body: `track_uri`, `player_id`) |
+| ANY | `/api/pause/{player_id}` | Pause playback |
+| ANY | `/api/stop/{player_id}` | Stop playback |
+| ANY | `/api/next/{player_id}` | Skip to next track |
+| ANY | `/api/previous/{player_id}` | Skip to previous track |
+| GET | `/health` | Health check |
+
+!!! example "Example: play a track via curl"
+    ```bash
+    curl -X POST http://192.168.1.100:8099/api/play \
+      -H "Content-Type: application/json" \
+      -d '{"track_uri": "library://track/42", "player_id": "msx_my_tv"}'
+    ```
+
+!!! example "Example: pause a player"
+    ```bash
+    curl http://192.168.1.100:8099/api/pause/msx_my_tv
+    ```
+
+## Known Issues and Limitations
+
+- **Local network required** — the TV or browser must be able to reach the Music Assistant server over HTTP. They should be on the same network or routable to each other.
+- **One provider instance** — only one MSX Bridge provider per Music Assistant server. Multiple TVs and browsers connect to the same instance.
+- **MSX app required on TV** — the TV interface requires the free MSX app. Use the web player (`/web`) on devices where the MSX app is not available.
+- **Audio format compatibility** — some older Smart TVs may not support AAC or FLAC. If audio doesn't play, switch to MP3 (the default) which has the widest compatibility.
+- **Browser autoplay** — some browsers block audio autoplay until you interact with the page. If audio doesn't start, click the play button.
+- **Long pause on TV** — pausing for more than a few minutes may cause the audio stream to expire. If this happens, select the track again to restart playback.
+- **Port conflict** — if port 8099 is already used by another service, change the **HTTP Server Port** in the provider settings.
 
 ## Links
 
-- [MSX Music Assistant Bridge](https://github.com/trudenboy/msx-music-assistant) — provider source code (by [trudenboy](https://github.com/trudenboy))
-- [Media Station X](https://msx.benzac.de/) — MSX app and documentation
-- [Music Assistant Server](https://github.com/music-assistant/server) — upstream server repository
+- [Media Station X](https://msx.benzac.de/) — MSX app homepage, download links, and documentation
+- [MSX Music Assistant Bridge](https://github.com/trudenboy/msx-music-assistant) — provider source code
+- [Music Assistant Server PR](https://github.com/music-assistant/server/pull/3123) — server integration pull request

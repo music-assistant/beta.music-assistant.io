@@ -5,7 +5,7 @@ Music Assistant has support for [Yandex Music](https://music.yandex.ru). Contrib
 This provider is built on top of the [yandex-music-api](https://github.com/MarshalX/yandex-music-api) library.
 
 !!! note
-    A Yandex Music Plus subscription is required for lossless (FLAC) quality. Standard accounts can stream at high quality (320 kbps).
+    A Yandex Music Plus subscription is required for lossless (FLAC) quality. Standard accounts can stream up to high quality (320 kbps MP3).
 
 ## Features
 
@@ -26,10 +26,10 @@ This provider is built on top of the [yandex-music-api](https://github.com/Marsh
 - Items in a users Yandex Music library will be synced to Music Assistant
 - Adding/removing items to/from the Music Assistant library will sync back to Yandex Music
 - Browse is available to explore the Yandex Music catalogue
-- **My Wave (Моя волна)** — personalized track feed, recommendations in Discover, and radio mode
-- **Picks & Mixes** — curated playlists by mood, activity, era, genre, and season
-- **Extended recommendations** — Made for You, Chart, New Releases, New Playlists on home page
-- **Lyrics** — synced (LRC) and plain text lyrics from Yandex Music
+- **My Wave** — personalized infinite radio powered by Yandex's AI
+- **Picks & Mixes** — curated playlists organized by mood, activity, era, genre, and season
+- **Extended recommendations** — Made for You, Chart, New Releases, New Playlists, and more on the home page
+- **Lyrics** — synced (LRC) and plain text lyrics
 
 ## Audio Quality
 
@@ -38,101 +38,115 @@ Four quality tiers are available:
 | Quality | Format | Bitrate | Requirements |
 |---------|--------|---------|--------------|
 | Efficient | AAC | ~64 kbps | Free account |
-| Balanced | AAC | ~192 kbps | Free account |
+| Balanced (default) | AAC | ~192 kbps | Free account |
 | High | MP3 | ~320 kbps | Free account |
 | Superb | FLAC | Lossless | Plus subscription |
 
+You can change the quality at any time in the provider settings. The actual codec and bitrate are selected automatically when playback starts, based on what Yandex Music offers for each track.
+
 ### FLAC Streaming Modes
 
-For encrypted FLAC streams, three streaming modes are available:
+When streaming encrypted FLAC tracks (Superb quality), you can choose how decryption is handled:
 
-- **Direct** — On-the-fly decryption, best for fast devices
-- **Buffered** — Async queue decoupling download from decryption (recommended)
-- **Preload** — Full file download before playback, enables seek and accurate progress bar
+- **Direct** — Decrypts on-the-fly as data arrives. Uses the least memory but requires a fast device.
+- **Buffered** (default, recommended) — Separates the download and decryption into an async queue. Works well on most hardware.
+- **Preload** — Downloads and decrypts the entire file before playback starts. This takes longer to begin playing, but enables seeking and shows an accurate progress bar. If the file is larger than the configured limit (default: 100 MB), Preload automatically falls back to Buffered mode.
 
-## My Wave (Моя волна)
+!!! tip
+    Most users should leave the streaming mode at **Buffered**. Only change it if you experience playback issues or specifically need seek support in lossless tracks.
 
-My Wave is Yandex Music's personalized track feed, powered by the Rotor API. It appears in several places in Music Assistant.
+## My Wave
 
-### Where it appears
+My Wave is Yandex Music's personalized infinite radio. It uses Yandex's Rotor recommendation engine to generate a continuous stream of tracks tailored to your listening habits.
 
-- **Browse:** A root folder "Моя волна" / "My Wave" (locale-dependent). Opening it loads multiple batches of tracks. A "Load more" folder loads the next batch.
-- **Recommendations (Discover):** A "Моя волна" section with personalized tracks.
-- **Library playlists:** A virtual playlist "Моя волна" in your playlists list.
+### How it works
 
-### What you can do
+1. When you open My Wave, the provider requests several batches of tracks from Yandex's Rotor API (the same engine behind "My Wave" in the official Yandex Music app).
+2. Each batch contains a few tracks. The provider fetches multiple batches at once to give you a longer playlist to start with.
+3. Duplicate tracks are automatically filtered out — if a track appeared in a previous batch, it won't show up again.
+4. In Browse, a **"Load more"** button appears at the bottom. Tapping it fetches the next batch and adds more tracks.
+5. The maximum number of tracks is configurable (default: 150). Once the limit is reached, no more tracks are loaded.
 
-- Play from Browse, Discover, or the playlist in your library
-- **Radio mode:** Start radio from any Yandex Music track to get similar tracks via Rotor
-- **Rotor feedback:** The provider sends play events to Yandex to improve recommendations
+### Improving your recommendations
 
-### Configuration options
+The provider sends playback feedback to Yandex, similar to what the official app does:
 
-- Enable/disable My Wave in Browse, Discover, and library playlists
-- Maximum tracks limit (default: 150)
-- Batch count for loading (default: 3)
-- Radio mode feedback toggle
+- When you **start playing** a track, Yandex is notified.
+- When you **finish** a track (listen to nearly the end), Yandex counts it as "liked."
+- When you **skip** a track (stop before the end), Yandex adjusts future recommendations accordingly.
+
+This feedback happens automatically — you don't need to do anything. Over time, Yandex learns your preferences and My Wave becomes more personalized.
+
+### Where My Wave appears
+
+- **Browse** — A "My Wave" folder at the root of Yandex Music. You can play it directly or browse individual tracks.
+- **Home page (Discover)** — A "My Wave" recommendation section with a selection of personalized tracks.
+- **Library playlists** — A virtual "My Wave" playlist always appears in your playlist list for quick access.
+
+### Similar tracks (Radio mode)
+
+When you start radio mode from any Yandex Music track, the provider uses Yandex's Rotor engine to find similar tracks. This works for any track, not just My Wave — it creates a station based on that specific track's style and genre.
 
 ## Liked Tracks
 
-Your liked/favorited tracks are available as a virtual playlist with these features:
+Your liked (favorited) tracks are available as a virtual playlist:
 
-- **Reverse chronological sorting** — most recent likes first
-- **Browse folder** — optional folder in Browse section
-- **Virtual playlist** — appears in your library playlists
-- **Configurable limit** — default 500 tracks
+- Sorted in **reverse chronological order** — your most recently liked tracks appear first
+- Always visible in your library playlists and Browse section
+- The maximum number of tracks is configurable (default: 500)
+- Full track details (including album art) are fetched automatically
 
 ## Picks & Mixes
 
-Curated playlists organized by category, available in Browse and on the home page.
+Picks and Mixes let you browse curated playlists organized by theme, available in the Browse section.
 
 ### Browse structure
 
 ```
 Yandex Music
-├── Picks (Подборки)
+├── Picks
 │   ├── Mood — Chill, Sad, Romantic, Party, Relax
 │   ├── Activity — Workout, Focus, Morning, Evening, Driving
 │   ├── Era — 80s, 90s, 2000s, Retro
 │   └── Genres — Rock, Jazz, Classical, Electronic, R&B, Hip-Hop
-└── Mixes (Миксы)
+└── Mixes
     └── Seasonal — Winter, Summer, Autumn, New Year
 ```
 
-### Discovery sections
+The categories under Picks contain fixed tags, but additional tags may be discovered dynamically from Yandex Music's catalog (refreshed hourly). These extra tags appear in the Mood category.
 
-| Section | Description | Rotation |
-|---------|-------------|----------|
-| Top Picks | Top curated playlists | Hourly |
-| Mood Mix | Rotating mood playlists (chill, sad, romantic...) | Every 30 min |
-| Activity Mix | Rotating activity playlists (workout, focus...) | Every 30 min |
-| Seasonal Mix | Season-based playlists | Every 6 hours |
+Each tag opens a list of curated playlists you can play directly.
 
-## Extended Recommendations
+## Home Page Recommendations
 
-Additional sections on the home page:
+The home page shows up to 9 recommendation sections. All sections are always enabled — there are no toggles to show or hide individual sections.
 
-- **Made for You** — Playlist of the Day, DejaVu, Premiere, and other personalized playlists
-- **Chart** — Top chart tracks
-- **New Releases** — Latest album releases
-- **New Playlists** — Fresh editorial playlists
+| Section | What it shows | How often it refreshes |
+|---------|--------------|----------------------|
+| **My Wave** | Personalized tracks from Rotor AI | Every 10 minutes |
+| **Made for You** | Playlist of the Day, DejaVu, Premiere, and other auto-generated playlists | Every 30 minutes |
+| **Chart** | Current top tracks | Every hour |
+| **New Releases** | Latest album releases | Every hour |
+| **New Playlists** | Fresh editorial playlists | Every hour |
+| **Top Picks** | Top curated playlists (tag: "top") | Every hour |
+| **Mood Mix** | Playlists for a random mood (rotates between chill, sad, romantic, party, relax) | Every 30 minutes |
+| **Activity Mix** | Playlists for a random activity (rotates between workout, focus, morning, evening, driving) | Every 30 minutes |
+| **Seasonal Mix** | Season-appropriate playlists based on the current month (winter, summer, autumn) | Every 6 hours |
 
-Each section can be enabled or disabled independently in settings.
+The Mood Mix and Activity Mix sections show a different mood/activity each time they refresh, so you'll see variety throughout the day. The Seasonal Mix picks the season based on the current month automatically.
 
 ## Lyrics
 
-Lyrics are fetched directly from Yandex Music when viewing track details.
+Lyrics are fetched directly from Yandex Music when viewing track details:
 
-- **Synced lyrics (LRC)** — With timestamps for karaoke-style synchronized display
-- **Plain text lyrics** — When synced lyrics are not available
-- **Automatic caching** — Lyrics are cached for 30 days
+- **Synced lyrics (LRC)** — With timestamps for karaoke-style synchronized display, when available
+- **Plain text lyrics** — Used as fallback when synced lyrics are not available
+- **Automatic caching** — Lyrics are cached together with track data for 30 days
 
 !!! note
-    Lyrics availability depends on the track and may vary by region due to licensing restrictions.
+    Lyrics availability depends on the track and may vary by region due to licensing restrictions. If lyrics are unavailable for your region, the provider handles this silently without errors.
 
 ## Configuration
-
-Configuration requires obtaining an OAuth token from Yandex Music.
 
 ### Obtaining the Token
 
@@ -142,32 +156,36 @@ Configuration requires obtaining an OAuth token from Yandex Music.
 4. Copy the token value (the part after `access_token=` and before `&`)
 5. Paste this token into the Music Assistant Yandex Music provider configuration
 
-### Settings Categories
+### Settings
 
-Settings are organized into categories for easier navigation:
+The provider has 8 settings. The first 3 are shown by default; the rest are under "Show advanced settings."
 
-| Category | Settings |
-|----------|----------|
-| **My Wave** | Enable in Browse/Discover/Playlists, max tracks, batch count, radio feedback |
-| **Liked Tracks** | Enable in Browse/Playlists, max tracks |
-| **Discovery** | Made for You, Chart, New Releases, New Playlists toggles |
-| **Picks & Mixes** | Enable Picks/Mixes in Browse, Top Picks, Mood/Activity/Seasonal Mix on home |
-| **Streaming** | FLAC streaming mode, Preload max file size |
-| **Advanced** | Track batch size, initial tracks limits, API base URL |
+| Setting | Default | Description |
+|---------|---------|-------------|
+| **Yandex Music Token** | — | Your OAuth token (see above) |
+| **Reset authentication** | — | Clears the saved token so you can re-authenticate |
+| **Audio quality** | Balanced | Choose between Efficient, Balanced, High, or Superb (FLAC) |
+
+**Advanced settings** (click "Show advanced settings" to see these):
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| **FLAC streaming mode** | Buffered | How encrypted FLAC streams are decoded (Direct, Buffered, or Preload) |
+| **Preload max file size (MB)** | 100 | Only visible when Preload mode is selected. Files larger than this use Buffered mode instead |
+| **My Wave maximum tracks** | 150 | How many tracks to load for My Wave. Lower = faster loading |
+| **Liked Tracks maximum tracks** | 500 | How many liked tracks to show. Lower = faster loading |
+| **API Base URL** | api.music.yandex.net | Only change if Yandex changes their API endpoint |
 
 ## Localization
 
-All folder names and labels are available in Russian and English. The language is determined automatically based on Music Assistant locale settings:
+All folder and section names automatically adapt to your Music Assistant language:
 
-- Russian (`ru_*` locales): "Моя волна", "Подборки", "Миксы", etc.
-- Other locales: "My Wave", "Picks", "Mixes", etc.
+- **Russian** (`ru_*` locales): "Моя волна", "Мне нравится", "Подборки", "Миксы", etc.
+- **Other locales**: "My Wave", "My Favorites", "Picks", "Mixes", etc.
 
 ## Known Issues / Notes
 
-- The token may expire and need to be refreshed periodically
+- The OAuth token may expire and need to be refreshed periodically
 - During long sessions the API may occasionally disconnect; the provider reconnects automatically
 - Some curated playlists may be unavailable in certain regions due to geo-restrictions
-
-## Not yet supported
-
-- Multiple Yandex Music accounts cannot be added as yet
+- Multiple Yandex Music accounts are not yet supported

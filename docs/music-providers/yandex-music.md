@@ -276,7 +276,7 @@
 
 === "English"
 
-    The home page shows up to 9 recommendation sections. All sections are always enabled — there are no toggles to show or hide individual sections.
+    The home page shows up to 9 recommendation sections. Each section can be shown or hidden, and its position can be changed, via the [Edit Homescreen](../ui.md#view-home) feature (blue icon in the top right of the home page).
 
     | Section | What it shows | How often it refreshes |
     |---------|--------------|----------------------|
@@ -294,7 +294,7 @@
 
 === "Русский"
 
-    На главной странице отображается до 9 секций рекомендаций. Все секции всегда включены — нет переключателей для отображения или скрытия отдельных секций.
+    На главной странице отображается до 9 секций рекомендаций. Каждую секцию можно показать или скрыть, а также изменить её позицию через функцию [Edit Homescreen](../ui.md#view-home) (синяя иконка в правом верхнем углу главной страницы).
 
     | Секция | Что показывает | Частота обновления |
     |--------|---------------|-------------------|

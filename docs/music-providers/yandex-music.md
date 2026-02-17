@@ -92,7 +92,7 @@
     - **Preload** — Downloads and decrypts the entire file before playback starts. This takes longer to begin playing, but enables seeking and shows an accurate progress bar. If the file is larger than the configured limit (default: 100 MB), Preload automatically falls back to Buffered mode.
 
     !!! tip
-        Most users should leave the streaming mode at **Buffered**. Only change it if you experience playback issues or specifically need seek support in lossless tracks.
+        Most users should leave the streaming mode at **Buffered**. If you experience stuttering on a slow or unstable connection, try increasing the **Stream buffer size** in advanced settings (default: 8 MB, up to 32 MB).
 
 === "Русский"
 
@@ -116,7 +116,7 @@
     - **Preload** — Загружает и дешифрует весь файл перед началом воспроизведения. Запуск занимает больше времени, но позволяет перемотку и показывает точный прогресс-бар. Если файл больше установленного лимита (по умолчанию: 100 МБ), Preload автоматически переключается на Buffered.
 
     !!! tip
-        Большинству пользователей следует оставить режим стриминга **Buffered**. Меняйте его только при проблемах с воспроизведением или если вам нужна перемотка в lossless-треках.
+        Большинству пользователей следует оставить режим стриминга **Buffered**. Если воспроизведение заикается при медленном или нестабильном соединении, попробуйте увеличить **Stream buffer size** в расширенных настройках (по умолчанию: 8 МБ, максимум 32 МБ).
 
 ## My Wave
 

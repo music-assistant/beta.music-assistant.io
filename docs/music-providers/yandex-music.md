@@ -348,7 +348,7 @@
 
     ### Settings
 
-    The provider has 8 settings. The first 3 are shown by default; the rest are under "Show advanced settings."
+    The provider has 9 settings. The first 3 are shown by default; the rest are under "Show advanced settings."
 
     | Setting | Default | Description |
     |---------|---------|-------------|
@@ -362,6 +362,7 @@
     |---------|---------|-------------|
     | **FLAC streaming mode** | Buffered | How encrypted FLAC streams are decoded (Direct, Buffered, or Preload) |
     | **Preload max file size (MB)** | 100 | Only visible when Preload mode is selected. Files larger than this use Buffered mode instead |
+    | **Stream buffer size (MB)** | 8 | Only visible when Buffered mode is selected. Larger values help with slow or unstable connections by buffering more audio ahead of playback (~45 sec of FLAC at 8 MB). Range: 1–32 MB |
     | **My Wave maximum tracks** | 150 | How many tracks to load for My Wave. Lower = faster loading |
     | **Liked Tracks maximum tracks** | 500 | How many liked tracks to show. Lower = faster loading |
     | **API Base URL** | api.music.yandex.net | Only change if Yandex changes their API endpoint |
@@ -378,7 +379,7 @@
 
     ### Настройки
 
-    Провайдер имеет 8 настроек. Первые 3 отображаются по умолчанию; остальные доступны через «Show advanced settings».
+    Провайдер имеет 9 настроек. Первые 3 отображаются по умолчанию; остальные доступны через «Show advanced settings».
 
     | Настройка | По умолчанию | Описание |
     |-----------|-------------|----------|
@@ -392,6 +393,7 @@
     |-----------|-------------|----------|
     | **FLAC streaming mode** | Buffered | Способ дешифровки FLAC-потоков (Direct, Buffered или Preload) |
     | **Preload max file size (MB)** | 100 | Отображается только при выборе Preload. Файлы больше этого размера используют Buffered |
+    | **Stream buffer size (MB)** | 8 | Отображается только при выборе Buffered. Увеличение помогает при медленном или нестабильном соединении, буферизуя больше аудио перед воспроизведением (~45 сек FLAC при 8 МБ). Диапазон: 1–32 МБ |
     | **My Wave maximum tracks** | 150 | Сколько треков загружать для Моей волны. Меньше = быстрее загрузка |
     | **Liked Tracks maximum tracks** | 500 | Сколько избранных треков показывать. Меньше = быстрее загрузка |
     | **API Base URL** | api.music.yandex.net | Менять только если Яндекс изменит адрес API |

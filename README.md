@@ -1,3 +1,7 @@
+> [!NOTE]
+> This repo is no longer in use. Please refer to the [beta branch of the main repository](https://github.com/music-assistant/music-assistant.io/tree/beta)
+
+
 # music-assistant.io
 Documentation repo for Music Assistant based on MkDocs Material
 

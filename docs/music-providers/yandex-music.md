@@ -83,16 +83,7 @@
 
     You can change the quality at any time in the provider settings. The actual codec and bitrate are selected automatically when playback starts, based on what Yandex Music offers for each track.
 
-    ### FLAC Streaming Modes
-
-    When streaming encrypted FLAC tracks (Superb quality), you can choose how decryption is handled:
-
-    - **Direct** — Decrypts on-the-fly as data arrives. Uses the least memory but requires a fast device.
-    - **Buffered** (default, recommended) — Separates the download and decryption into an async queue. Works well on most hardware.
-    - **Preload** — Downloads and decrypts the entire file before playback starts. This takes longer to begin playing, but enables seeking and shows an accurate progress bar. If the file is larger than the configured limit (default: 100 MB), Preload automatically falls back to Buffered mode.
-
-    !!! tip
-        Most users should leave the streaming mode at **Buffered**. If you experience stuttering on a slow or unstable connection, try increasing the **Stream buffer size** in advanced settings (default: 8 MB, up to 32 MB).
+    Encrypted FLAC tracks are decrypted on-the-fly as data arrives. Seeking is handled by Music Assistant core via ffmpeg.
 
 === "Русский"
 
@@ -107,16 +98,7 @@
 
     Качество можно изменить в любое время в настройках провайдера. Кодек и битрейт выбираются автоматически при начале воспроизведения в зависимости от того, что Yandex Music предлагает для каждого трека.
 
-    ### Режимы стриминга FLAC
-
-    При воспроизведении зашифрованных FLAC-треков (качество Superb) можно выбрать способ дешифровки:
-
-    - **Direct** — Дешифровка на лету по мере поступления данных. Минимальное потребление памяти, но требуется быстрое устройство.
-    - **Buffered** (по умолчанию, рекомендуется) — Загрузка и дешифровка разделены в асинхронную очередь. Хорошо работает на большинстве устройств.
-    - **Preload** — Загружает и дешифрует весь файл перед началом воспроизведения. Запуск занимает больше времени, но позволяет перемотку и показывает точный прогресс-бар. Если файл больше установленного лимита (по умолчанию: 100 МБ), Preload автоматически переключается на Buffered.
-
-    !!! tip
-        Большинству пользователей следует оставить режим стриминга **Buffered**. Если воспроизведение заикается при медленном или нестабильном соединении, попробуйте увеличить **Stream buffer size** в расширенных настройках (по умолчанию: 8 МБ, максимум 32 МБ).
+    Зашифрованные FLAC-треки дешифруются на лету по мере поступления данных. Перемотка обрабатывается ядром Music Assistant через ffmpeg.
 
 ## My Wave
 
@@ -348,7 +330,7 @@
 
     ### Settings
 
-    The provider has 9 settings. The first 3 are shown by default; the rest are under "Show advanced settings."
+    The provider has 6 settings. The first 3 are shown by default; the rest are under "Show advanced settings."
 
     | Setting | Default | Description |
     |---------|---------|-------------|
@@ -360,9 +342,6 @@
 
     | Setting | Default | Description |
     |---------|---------|-------------|
-    | **FLAC streaming mode** | Buffered | How encrypted FLAC streams are decoded (Direct, Buffered, or Preload) |
-    | **Preload max file size (MB)** | 100 | Only visible when Preload mode is selected. Files larger than this use Buffered mode instead |
-    | **Stream buffer size (MB)** | 8 | Only visible when Buffered mode is selected. Larger values help with slow or unstable connections by buffering more audio ahead of playback (~45 sec of FLAC at 8 MB). Range: 1–32 MB |
     | **My Wave maximum tracks** | 150 | How many tracks to load for My Wave. Lower = faster loading |
     | **Liked Tracks maximum tracks** | 500 | How many liked tracks to show. Lower = faster loading |
     | **API Base URL** | api.music.yandex.net | Only change if Yandex changes their API endpoint |
@@ -379,7 +358,7 @@
 
     ### Настройки
 
-    Провайдер имеет 9 настроек. Первые 3 отображаются по умолчанию; остальные доступны через «Show advanced settings».
+    Провайдер имеет 6 настроек. Первые 3 отображаются по умолчанию; остальные доступны через «Show advanced settings».
 
     | Настройка | По умолчанию | Описание |
     |-----------|-------------|----------|
@@ -391,9 +370,6 @@
 
     | Настройка | По умолчанию | Описание |
     |-----------|-------------|----------|
-    | **FLAC streaming mode** | Buffered | Способ дешифровки FLAC-потоков (Direct, Buffered или Preload) |
-    | **Preload max file size (MB)** | 100 | Отображается только при выборе Preload. Файлы больше этого размера используют Buffered |
-    | **Stream buffer size (MB)** | 8 | Отображается только при выборе Buffered. Увеличение помогает при медленном или нестабильном соединении, буферизуя больше аудио перед воспроизведением (~45 сек FLAC при 8 МБ). Диапазон: 1–32 МБ |
     | **My Wave maximum tracks** | 150 | Сколько треков загружать для Моей волны. Меньше = быстрее загрузка |
     | **Liked Tracks maximum tracks** | 500 | Сколько избранных треков показывать. Меньше = быстрее загрузка |
     | **API Base URL** | api.music.yandex.net | Менять только если Яндекс изменит адрес API |

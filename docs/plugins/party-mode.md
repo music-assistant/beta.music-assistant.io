@@ -7,7 +7,7 @@ description: Features and configuration for the Party Mode Plugin
 
 Party Mode lets your guests add their favorite songs to the queue just by scanning a QR code, no logins or accounts needed! Just display the party mode dashboard on a TV or device of your choice. Guests have a dedicated UI page with no access to your system controls. With optional rate limits you can keep things fair.
 
-![Party Mode Dashboard](../assets/screenshots/party-mode-dashboard.png)
+![Party Mode Dashboard](../assets/screenshots/party-mode/party-mode-dashboard.png)
 
 ## Features
 
@@ -35,7 +35,7 @@ Party Mode lets your guests add their favorite songs to the queue just by scanni
 4. Tap "Add" to add to the queue, or "Boost" to play sooner
 5. View the current queue and see when their songs will play
 
-![Guest View - Queue](../assets/screenshots/party-mode-guest-view-queue.png)
+![Guest View - Queue](../assets/screenshots/party-mode/party-mode-guest-view-queue.png)
 
 ## Configuration
 
@@ -110,7 +110,7 @@ Access via `/party` in the Music Assistant interface. This view is designed for 
 !!! tip "Clean Display Mode"
     For a completely frameless dashboard without side navigation, enable **Force Mobile View** in Settings → User Interface. This removes all navigation elements, leaving only the party view content - perfect for dedicated displays or kiosk mode.
 
-![Party Mode Dashboard with Boost](../assets/screenshots/party-mode-dashboard-boost.png)
+![Party Mode Dashboard with Boost](../assets/screenshots/party-mode/party-mode-dashboard-boost.png)
 
 ### Guest View (Mobile Interface)
 
@@ -125,9 +125,9 @@ Guests are automatically redirected here after scanning the QR code.
 - Token counters showing remaining requests
 - "Request" and "Boost" badges on songs they've added
 
-![Guest View - Search](../assets/screenshots/party-mode-guest-view-search.png)
+![Guest View - Search](../assets/screenshots/party-mode/party-mode-guest-view-search.png)
 
-![Guest View - Queue](../assets/screenshots/party-mode-guest-view-queue.png)
+![Guest View - Queue](../assets/screenshots/party-mode/party-mode-guest-view-queue.png)
 
 ## Remote Access
 

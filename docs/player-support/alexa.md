@@ -18,46 +18,41 @@ In addition to the [Individual Player Settings](../settings/individual-player.md
 
 ## Configuration
 
-### 1. Set Up the Music Assistant Alexa API Bridge
-- Pull from GitHub Container Registry and run the Docker container:
+### 1. Set Up the Music Assistant Alexa Skill Prototype
+Run with Docker Compose (recommended):
+
+- Copy the `docker-compose.yml` from the prototype repository (`https://github.com/alams154/music-assistant-alexa-skill-prototype`) and ensure Docker and Docker Compose are installed.
+- Create a `secrets/` directory next to your `docker-compose.yml` and add the following files (relative to the compose file):
+
+  - `./secrets/api_username.txt` — contains your API username
+  - `./secrets/api_password.txt` — contains your API password
+
+- Edit environment variables in `docker-compose.yml` as needed (for example: `MA_HOSTNAME`, `PORT`).
+- Start the service:
+
   ```sh
-  docker pull ghcr.io/alams154/music-assistant-alexa-api:latest
-  docker run --rm -d -p 3000:3000 -e USERNAME=admin -e PASSWORD=test ghcr.io/alams154/music-assistant-alexa-api:latest
+  docker compose up -d
   ```
 
+- By default the service will be available at `http://localhost:5000` (or the IP/port you configured).
+- In your browser, open the setup UI at `http://localhost:5000/setup`. The setup page will:
+   - detect existing persistent ASK credentials (if present) and skip the browser-based auth flow
+   - guide you through the ASK CLI authorization flow if credentials are not present
+   - run the automated skill creation/update, interaction model upload, model build polling, and testing enablement.
+- In your browser, open the status UI at `http://localhost:5000/status` to check the status of the skill
+
 ### 2. Set Up a Proxy with SSL Certificates
-- Configure a reverse proxy (such as Nginx or Caddy) in front of both the API bridge (default port: 3000) and your Music Assistant streaming port (default port: 8097)
+- Configure a reverse proxy (such as Nginx or Caddy) in front of both the skill prototype service (default port: 5000) and your Music Assistant streaming port (default port: 8097) [optional if using only APL devices]
 - Obtain and install valid SSL certificates (e.g. using Let's Encrypt) for your domain(s)
-- Ensure both the API bridge and Music Assistant streaming endpoints are accessible via HTTPS, as Alexa requires secure endpoints
-
-### 3. Import and Configure the Alexa Skill
-
-- Go to the [Alexa Developer Console](https://developer.amazon.com/alexa/console/ask)
-- Click **Create Skill** and follow the prompts:
-  - Choose a skill name and default language
-  - Select **Music & Audio** as the experience, **Custom** as the model, and **Alexa-Hosted (Node.js)** as the hosting service
-  - Click **Import skill** and enter:  
-    `https://github.com/alams154/music-assistant-alexa-skill.git`
-- Wait for the import to complete
-
-### 4. Customize the Skill
-
-1. Go to the **Build** tab in the Alexa Developer Console.
-2. Click the **Invocation Name** field and type in **music assistant** and hit save
-3. Go to the **Code** tab and open the `index.js` file.
-4. Change the **API_HOSTNAME** and **MA_HOSTNAME** constants to point to your API and Music Assistant instance.
-5. Change the **API_USERNAME** and **API_PASSWORD** constants regarding the basic auth settings of the alexa api container or your reverse proxy.
-6. Click **Deploy** to deploy the skill
-7. Go to the **Test** and enable skill testing in **Development**
-8. Go to the **Build** tab and build the skill
+- Ensure both the prototype and Music Assistant streaming [optional if using only APL devices] endpoints are accessible via HTTPS (port: 443), as Alexa requires secure endpoints
 
 **Summary:**  
-The API bridge is run as a separate server, a proxy with SSL certificates must be set up, the Alexa skill is imported and configured, and then Music Assistant playback should now be enabled on your Alexa devices.
+The skill prototype is run as a separate server, a proxy with SSL certificates must be set up, the Alexa skill is created and configured, and then Music Assistant playback should now be enabled on your Alexa devices.
 
-### 5. Login Process
+### Login Process
 
 -  Requires Amazon account credentials (email and password)
--  Requires one factor authentication code generation for the Amazon account
+-  Requires two factor authentication code generation for the Amazon account
     - Fill in required info (email and password) on config screen
     - Press `Authenticate with Amazon` button
     - Click `Sign In` radio button and then the big blue `Sign In` button after filling in credentials (this will fail)

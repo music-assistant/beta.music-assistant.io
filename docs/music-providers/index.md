@@ -12,7 +12,7 @@ General Notes:
 - Music providers are added by navigating to MA Settings and then Providers and then clicking on ADD A NEW PROVIDER. (In the image below the view is filtered to show just the music providers - this is optional)
 
 !!! tip "Note" 
-    If a problem occurs the automatic linking process may need to be initiated again. If what appears to be identical albums or tracks are seen then navigate to the album or track and use the ![question mark](../assets/icons/database-search.png){ width=20 } icon at the top of the PROVIDER DETAILS section. This will trigger the linking process and should result in the same albums and tracks being collapsed together.
+    If a problem occurs the automatic linking process may need to be initiated again. If what appears to be identical albums or tracks are seen then navigate to the album or track and use the ![question mark](../assets/icons/database-search.png){ width=20 } icon at the top of the [PROVIDER DETAILS](../ui.md#provider-details) section. This will trigger the linking process and should result in the same albums and tracks being collapsed together.
 
 ![image](../assets/screenshots/add-music-provider.png)
 
@@ -33,6 +33,14 @@ There is a setting which controls whether additions to the MA library are also m
 Lastly, depending on providers installed, there may be additional sync related options at the bottom of the section. Refer to the individual provider settings for more information.
 
 ![image](../assets/screenshots/library-import-settings.png)
+
+- <b>Sync Library Artists/Albums/Tracks/Playlists/Audiobooks/Podcasts from this provider to Music Assistant.</b> Whether to synchronize all artists/albums/tracks/playlists/audiobooks/podcasts from the local provider. 
+- <b>Import album tracks.</b> By default, adding albums to the Music Assistant library imports only the album entry rather than the associated tracks. This approach allows for the manual selection of specific tracks to include. To override this behavior, this configuration option can be enabled. Users should note that some streaming providers may already automate this process by adding all tracks to their favorites by default.
+- <b>Import playlist tracks.</b> By default, importing a playlist into Music Assistant adds only the playlist itself to the library. This allows the playlist to be streamed and individual tracks can be added manually as desired. This configuration option overrides that behavior for specific playlists by importing all associated tracks. Entries can be made using either the case-sensitive playlist name or the playlist URI.
+- <b>Automatic sync interval for Artists/Albums/Tracks/Playlists/Podcasts/Audiobooks.</b> Various time periods are selectable or it can be disabled
+- <b>Sync back library additions/removals (2-way sync).</b> This setting determines the behavior when an item is manually added to or removed from the Music Assistant library. Enabling this option ensures that these actions are synchronized back to the original provider. Without synchronization, items removed from the library may reappear during the next automatic sync if they remain present on the provider's side.
+- <b>Sync Podcast Progress from (provider).</b> Automatically sync episode played status from the provider to Music Assistant. Episodes marked as played in the provider will be marked as played in MA. Only enable this if you use both the the provider app and Music Assistant for podcast playback.
+- <b>Sync Audiobook Progress from (provider).</b> Automatically sync audiobook progress from theprovider to Music Assistant. Progress from the provider app will sync to MA when audiobooks are accessed. Only enable this if you use both the the provider app and Music Assistant for audiobook playback.
 
 ## Summary
 

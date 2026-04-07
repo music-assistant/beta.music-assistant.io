@@ -1,0 +1,42 @@
+---
+title: "Radio Paradise"
+---
+
+# Radio Paradise <img src="/assets/icons/radioparadise-icon.png" alt="Preview image" style="width: 70px; float: right;"  loading="lazy" />
+
+Music Assistant has support for <a href="https://radioparadise.com/" target="_blank" rel="noopener noreferrer">Radio Paradise</a> which allows easy addition of their radio stations to Music Assistant. Contributed and maintained by <a href="https://github.com/ozgav" target="_blank" rel="noopener noreferrer">Gavin</a>
+
+> [!TIP]
+> **Donate**
+>
+> Radio Paradise exists due to the generosity of their donors. If you are using this source consider supporting them https://radioparadise.com/support
+
+## Features
+
+|           |                     |
+|:-----------------------|:---------------------:|
+| Subscription FREE | Yes |
+| Self-Hosted Local Media | No |
+| Media Types Supported | Radio |
+| [Recommendations](/ui/#view-home) Supported | No |
+| Lyrics Supported | No |
+| [Radio Mode](/ui/#track-menu) | No |
+| Maximum Stream Quality | Lossless FLAC (16 bit, 44.1 kHz) |
+| Login Method | None |
+
+### Other
+
+- When available, details of upcoming tracks will be shown
+
+## Configuration
+
+- In the configuration, you only need to click the save button
+
+## Usage
+
+Use the browse view to find stations to add to the library.
+
+## Known Issues / Notes
+
+- Some other applications support skipping tracks. This is not supported in Music Assistant
+- Now playing and upcoming track information can lead or lag reality due to Radio Paradise's own data 
